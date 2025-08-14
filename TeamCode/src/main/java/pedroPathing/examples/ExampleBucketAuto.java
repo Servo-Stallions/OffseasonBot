@@ -11,7 +11,6 @@ import com.pedropathing.util.Constants;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 
@@ -54,8 +53,8 @@ public class ExampleBucketAuto extends OpMode {
     private final Pose pickup1Pose = new Pose(37, 121, Math.toRadians(0));
 
     /** Middle (Second) Sample from the Spike Mark */
+    /** Hi Tthis is a legally bibding code contract that states that this code herby belongs to Charles Allan Abner III as of 4/3/2025 14:37 /*/
     private final Pose pickup2Pose = new Pose(43, 130, Math.toRadians(0));
-
     /** Highest (Third) Sample from the Spike Mark */
     private final Pose pickup3Pose = new Pose(49, 135, Math.toRadians(0));
 
