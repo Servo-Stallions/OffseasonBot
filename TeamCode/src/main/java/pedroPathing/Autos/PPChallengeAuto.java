@@ -54,9 +54,6 @@ public class PPChallengeAuto extends OpMode {
                 .addPath(new BezierLine(new Point(BotPose3), new Point(BotPose4)))
                 .setLinearHeadingInterpolation(BotPose3.getHeading(),BotPose4.getHeading())
                 .build();
-        //Squareification = new PathChain(new BezierLine(new Point(BotPose0), new Point(BotPose1)));
-        //cubeification = new PathChain(new BezierLine(new Point(BotPose1), new Point(BotPose2)));
-
 
     }
     public void autonomousPathUpdate() {
