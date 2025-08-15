@@ -9,6 +9,9 @@ import com.pedropathing.util.Constants;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.pedropathing.pathgen.PathChain;
 
@@ -17,8 +20,9 @@ import pedroPathing.constants.LConstants;
 
 @Autonomous(name = "PPChallengeAuto", group = "Autos")
 public class PPChallengeAuto extends OpMode {
-    private Follower follower;
 
+    private DcMotorEx slides;
+    private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
     private int pathState;
     private final Pose BotPose0 = new Pose(0,0,Math.toRadians(180));
@@ -27,7 +31,7 @@ public class PPChallengeAuto extends OpMode {
     private final Pose BotPose3 = new Pose(91, 8, Math.toRadians(145));
     private final Pose BotPose4 = new Pose(7, -17, Math.toRadians(245));
 
-
+        //(ಠ_ಠ)//
     private PathChain Squareification,cubeification,tesseractification,penteractification;
     //private PathChain BotPath1;
 
@@ -37,6 +41,7 @@ public class PPChallengeAuto extends OpMode {
                 .setLinearHeadingInterpolation(BotPose0.getHeading(),BotPose1.getHeading())
                 .setZeroPowerAccelerationMultiplier(6)
                 .setPathEndTimeoutConstraint(250)
+                .addParametricCallback(0.5, () -> slides.setTargetPosition(500))
                 .build();
         cubeification = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(BotPose1), new Point(BotPose2)))
@@ -99,7 +104,10 @@ public class PPChallengeAuto extends OpMode {
         follower = new Follower(hardwareMap);
         follower.setStartingPose(BotPose0);
         buildPaths();
+        slides = hardwareMap.get(DcMotorEx.class, "slides");
+        slides.setDirection(DcMotorEx.Direction.FORWARD);
     }
+
 
     @Override
     public void loop() {
