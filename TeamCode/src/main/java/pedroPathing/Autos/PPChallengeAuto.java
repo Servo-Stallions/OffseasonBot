@@ -65,12 +65,23 @@ public class PPChallengeAuto extends OpMode {
         switch (pathState) {
             case 0: // Move from start to scoring position
                 follower.followPath(Squareification);
-                setPathState(1);
+                setPathState(10);
+                break;
+
+            case 10: // engage slides
+                if (follower.getCurrentTValue() > .3) {
+                    slides.setTargetPosition(500);
+                    slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slides.setPower(.6);
+
+                    setPathState(1);
+                }
                 break;
 
 
             case 1:
                 if (follower.atParametricEnd()) {
+
                     follower.followPath(cubeification);
                     setPathState(2);
                 }
@@ -105,7 +116,12 @@ public class PPChallengeAuto extends OpMode {
         follower.setStartingPose(BotPose0);
         buildPaths();
         slides = hardwareMap.get(DcMotorEx.class, "slides");
-        slides.setDirection(DcMotorEx.Direction.FORWARD);
+        slides.setDirection(DcMotorEx.Direction.REVERSE);
+        slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //slides.setPower(1);
+        telemetry.addData("Slide Encoder", slides.getCurrentPosition());
     }
 
 
@@ -115,6 +131,8 @@ public class PPChallengeAuto extends OpMode {
         autonomousPathUpdate();
         telemetry.addData("Path State", pathState);
         telemetry.addData("Position", follower.getPose().toString());
+        telemetry.addData("Slide Encoder", slides.getCurrentPosition());
         telemetry.update();
     }
+
 }
